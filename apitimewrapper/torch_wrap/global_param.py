@@ -1,0 +1,1 @@
+g_stop_hook = False
