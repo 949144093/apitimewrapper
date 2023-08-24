@@ -4,6 +4,8 @@
 使用wrap机制对mindspore及pytorch的所有接口进行自动打点，统计API执行性能
 
 #### 软件架构
+
+```
 ├── apitimewrapper
 │   ├── analysis.py
 │   ├── __init__.py
@@ -53,6 +55,8 @@
 │   └── top_level.txt
 ├── setup.py
 └── setup.sh
+```
+
 
 
 #### 安装教程
