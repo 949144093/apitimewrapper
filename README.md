@@ -4,33 +4,56 @@
 使用wrap机制对mindspore及pytorch的所有接口进行自动打点，统计API执行性能
 
 #### 软件架构
--apitimewrapper
-    -apitimewrapper
-        -ms_wrap
-            -__init__.py
-            -global_param.py
-            -hook_net.py
-            -my_print.py
-            -performance_cmp_new.py
-            -support_wrap_ops.yaml
-            -tracker.py
-            -wrap_function.py
-            -wrap_nn.py
-            -wrap_Tensor.py
-        -torch_wrap
-            -__init__.py
-            -global_param.py
-            -hook_net.py
-            -my_print.py
-            -support_wrap_ops.yaml
-            -wrap_functional.py
-            -wrap_module.py
-            -wrap_tensor.py
-            -wrap_torch.py
-        -__init__.py
-        -analysis.py
-    -setup.py
-    -setup.sh
+├── apitimewrapper
+│   ├── analysis.py
+│   ├── __init__.py
+│   ├── ms_wrap
+│   │   ├── global_param.py
+│   │   ├── hook_net.py
+│   │   ├── __init__.py
+│   │   ├── my_print.py
+│   │   ├── performance_cmp_new.py
+│   │   ├── __pycache__
+│   │   │   ├── global_param.cpython-39.pyc
+│   │   │   ├── hook_net.cpython-39.pyc
+│   │   │   ├── __init__.cpython-39.pyc
+│   │   │   ├── my_print.cpython-39.pyc
+│   │   │   ├── tracker.cpython-39.pyc
+│   │   │   ├── wrap_function.cpython-39.pyc
+│   │   │   ├── wrap_nn.cpython-39.pyc
+│   │   │   └── wrap_Tensor.cpython-39.pyc
+│   │   ├── support_wrap_ops.yaml
+│   │   ├── tracker.py
+│   │   ├── wrap_function.py
+│   │   ├── wrap_nn.py
+│   │   └── wrap_Tensor.py
+│   └── torch_wrap
+│       ├── global_param.py
+│       ├── hook_net.py
+│       ├── __init__.py
+│       ├── my_print.py
+│       ├── __pycache__
+│       │   ├── global_param.cpython-39.pyc
+│       │   ├── hook_net.cpython-39.pyc
+│       │   ├── __init__.cpython-39.pyc
+│       │   ├── my_print.cpython-39.pyc
+│       │   ├── wrap_functional.cpython-39.pyc
+│       │   ├── wrap_module.cpython-39.pyc
+│       │   ├── wrap_tensor.cpython-39.pyc
+│       │   └── wrap_torch.cpython-39.pyc
+│       ├── support_wrap_ops.yaml
+│       ├── wrap_functional.py
+│       ├── wrap_module.py
+│       ├── wrap_tensor.py
+│       └── wrap_torch.py
+├── apitimewrapper.egg-info
+│   ├── dependency_links.txt
+│   ├── PKG-INFO
+│   ├── SOURCES.txt
+│   └── top_level.txt
+├── setup.py
+└── setup.sh
+
 
 #### 安装教程
 bash setup.sh
