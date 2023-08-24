@@ -76,6 +76,103 @@ if __name__ == '__main__':
     ...
 ```
 
+### 0.0.4版本功能新增说明
+# 功能新增说明
+性能分析工具0.0.4版本相对于0.0.3版本新增参数parall_execute，参数默认为False，功能与0.0.3版本兼容，若单算子接口串行测试性能不达标，则可以开启异步进行测试，若异步性能达标，调低优化优先级，测试用法如下：  
+将测试脚本中的
+```python
+start_hook_net(hook_inside)
+start_hook_torch_net(hook_inside)
+```
+修改为:  
+```python
+start_hook_net(hook_inside, parall_execute=True)
+start_hook_torch_net(hook_inside, parall_execute=True)
+```
+
+此外，在测试脚本中for循环结束后增添异步等待的代码，具体如下：  
+将测试脚本中的
+```python
+start_analysis()
+for _ in range(100):
+    ops.reshape(ms_input_a, (4000, 500))
+
+for _ in range(100):
+    torch.reshape(torch_input_a, (4000, 500))
+end_analysis()
+
+```
+修改为:  
+```python
+start_analysis()
+for _ in range(100):
+    ops.reshape(ms_input_a, (4000, 500))
+_pynative_executor.sync()
+for _ in range(100):
+    torch.reshape(torch_input_a, (4000, 500))
+torch.cuda.synchronize()
+end_analysis()
+```
+
+# 完整测试用例示例  
+```python
+import os
+
+import torch
+import mindspore
+import mindspore as ms
+from mindspore import ops, nn, Tensor
+
+import numpy as np
+from apitimewrapper import start_hook_net, start_hook_torch_net, print, start_analysis, end_analysis
+from mindspore.common.api import _pynative_executor
+
+# 需自定义测试的部分
+#########################################
+# np格式的输入
+input_a = np.random.randn(1000, 2000)
+input_b = np.random.randn(1000, 2000)
+
+# 转为ms的tensor
+ms_input_a = Tensor(input_a, mindspore.float32)
+ms_input_b = Tensor(input_b, mindspore.float32)
+
+# 转为torch的tensor
+torch_input_a = torch.tensor(input_a, dtype=torch.float32)
+torch_input_b = torch.tensor(input_b, dtype=torch.float32)
+
+# 手动将torch的Tensor拷贝到对应设备上，卡号需手动修改
+device_id = int(os.environ.get('DEVICE_ID', 0))
+torch_input_a.to(device=torch.device(f'cuda:{device_id}'))
+torch_input_b.to(device=torch.device(f'cuda:{device_id}'))
+
+hook_inside = False
+start_hook_net(hook_inside, parall_execute=True)
+start_hook_torch_net(hook_inside, parall_execute=True)
+
+"""
+这段代码的作用是为了先启动框架，排除框架首次启动时长以及host侧到device侧tensor拷贝时长的耗时影响。
+"""
+ms_input_a.reshape((4000, 500))
+torch_input_a.reshape((4000, 500))
+ms_input_a.reshape((4000, 500))
+torch_input_a.reshape((4000, 500))
+print("------排除框架启动执行耗时------")
+
+# 在0.0.3版本，我们可以通过在执行代码前后增添start_analysis()和end_analysis()的方式，自动对执行部分代码进行性能分析。
+start_analysis()
+for _ in range(100):
+    # ms_input_a.reshape((4000, 500))
+    ops.reshape(ms_input_a, (4000, 500))
+_pynative_executor.sync()
+for _ in range(100):
+    # torch_input_a.reshape((4000, 500))
+    torch.reshape(torch_input_a, (4000, 500))
+torch.cuda.synchronize()
+end_analysis()
+
+```
+
 #### 参与贡献
 
 1.  Fork 本仓库
