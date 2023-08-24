@@ -60,9 +60,13 @@
 
 
 #### 安装教程
+
+```
 bash setup.sh
 cd dist
 pip install apitimewrapper-0.0.4-py3-none-any.whl
+```
+
 #### 使用说明
 1. pip install apitimewrapper-0.0.4-py3-none-any.whl
 2. 修改我们的网络执行入口文件，若要执行训练，则修改train.py, 若要执行推理，则修改eval.py。  
