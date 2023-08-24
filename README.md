@@ -4,33 +4,33 @@
 使用wrap机制对mindspore及pytorch的所有接口进行自动打点，统计API执行性能
 
 #### 软件架构
-apitimewrapper
-    apitimewrapper
-        ms_wrap
-            __init__.py
-            global_param.py
-            hook_net.py
-            my_print.py
-            performance_cmp_new.py
-            support_wrap_ops.yaml
-            tracker.py
-            wrap_function.py
-            wrap_nn.py
-            wrap_Tensor.py
-        torch_wrap
-            __init__.py
-            global_param.py
-            hook_net.py
-            my_print.py
-            support_wrap_ops.yaml
-            wrap_functional.py
-            wrap_module.py
-            wrap_tensor.py
-            wrap_torch.py
-        __init__.py
-        analysis.py
-    setup.py
-    setup.sh
+-apitimewrapper
+    -apitimewrapper
+        -ms_wrap
+            -__init__.py
+            -global_param.py
+            -hook_net.py
+            -my_print.py
+            -performance_cmp_new.py
+            -support_wrap_ops.yaml
+            -tracker.py
+            -wrap_function.py
+            -wrap_nn.py
+            -wrap_Tensor.py
+        -torch_wrap
+            -__init__.py
+            -global_param.py
+            -hook_net.py
+            -my_print.py
+            -support_wrap_ops.yaml
+            -wrap_functional.py
+            -wrap_module.py
+            -wrap_tensor.py
+            -wrap_torch.py
+        -__init__.py
+        -analysis.py
+    -setup.py
+    -setup.sh
 
 #### 安装教程
 bash setup.sh
