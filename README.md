@@ -43,11 +43,11 @@
 ```
 bash setup.sh
 cd dist
-pip install apitimewrapper-0.0.4-py3-none-any.whl
+pip install apitimewrapper-0.0.5-py3-none-any.whl
 ```
 
 #### 使用说明
-1. pip install apitimewrapper-0.0.4-py3-none-any.whl
+1. pip install apitimewrapper-0.0.5-py3-none-any.whl
 2. 修改我们的网络执行入口文件，若要执行训练，则修改train.py, 若要执行推理，则修改eval.py。  
 以如下dino网络为例：  
 首先在文件注释step1的位置增添导包，分别导出start_hook_net和print方法，其中start_hook_net方法用于对我们整网的所有api(nn, ops, tensor)进行wrap，在其执行前后进行自动打点计时，print则重载了原生的内建print方法，增添了打屏并写入日志的功能。  
@@ -172,6 +172,17 @@ torch.cuda.synchronize()
 end_analysis()
 
 ```
+
+#### 0.0.5版本更新日志
+1. 新增全局变量控制运行时是否打屏（默认写入日志）
+```python
+from apitimewrapper.ms_wrap import global_param
+from apitimewrapper.torch_wrap import global_param
+global_param.g_stop_ms_print = True
+global_param.g_stop_torch_print = True
+```
+2. 新增异常处理逻辑，修复在测试脚本中使用异常处理时导致后续api性能数据消失的bug
+3. 增添torch遗漏接口torch.meshgrid, torch.Tensor.split
 
 #### 参与贡献
 

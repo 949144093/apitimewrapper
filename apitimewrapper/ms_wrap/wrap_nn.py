@@ -36,15 +36,18 @@ def call_decorator(cls, name, parall_execute=False):
         else:
             global_param.g_stop_hook = True
             changed = True
-            start_time = time.perf_counter()
-            result = original_call(self, *args, **kwargs)
-            if not parall_execute:
-                _pynative_executor.sync()
-            end_time = time.perf_counter()
-            print(f"nn.{self.cls_name} cost_time:{end_time - start_time}")
-
-        if changed:
-            global_param.g_stop_hook = False
+            try:
+                start_time = time.perf_counter()
+                result = original_call(self, *args, **kwargs)
+                if not parall_execute:
+                    _pynative_executor.sync()
+                end_time = time.perf_counter()
+                print(f"nn.{self.cls_name} cost_time:{end_time - start_time}")
+            except Exception as e:
+                raise e
+            finally:
+                if changed:
+                    global_param.g_stop_hook = False
         return result
 
     cls.__call__ = new_call

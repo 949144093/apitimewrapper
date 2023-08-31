@@ -55,14 +55,18 @@ class FunctionalOPTemplate(torch.nn.Module):
 
     def forward(self, *args, **kwargs):
         if self.changed_status:
-            start_time = time.perf_counter()
-            out = eval(self.op_name_)(*args, **kwargs)
-            if not self.parall_execute:
-                torch.cuda.synchronize()
-            end_time = time.perf_counter()
-            print(f"torch.nn.function.{self.op_name_} cost_time:{end_time - start_time}")
-            self.changed_status = False
-            global_param.g_stop_hook = False
+            try:
+                start_time = time.perf_counter()
+                out = eval(self.op_name_)(*args, **kwargs)
+                if not self.parall_execute:
+                    torch.cuda.synchronize()
+                end_time = time.perf_counter()
+                print(f"torch.nn.function.{self.op_name_} cost_time:{end_time - start_time}")
+            except Exception as e:
+                raise e
+            finally:
+                self.changed_status = False
+                global_param.g_stop_hook = False
         else:
             out = eval(self.op_name_)(*args, **kwargs)
         return out

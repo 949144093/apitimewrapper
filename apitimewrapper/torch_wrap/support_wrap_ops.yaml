@@ -504,6 +504,7 @@ tensor:
   - softmax
   - solve
   - sort
+  - split
   - split_with_sizes
   - sqrt
   - sqrt_
@@ -846,6 +847,7 @@ torch:
   - maximum
   - mean
   - median
+  - meshgrid
   - min
   - minimum
   - mm

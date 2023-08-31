@@ -1,5 +1,6 @@
 import builtins
 import logging
+from . import global_param
 
 
 def print(*args, **kwargs):
@@ -12,4 +13,5 @@ def print(*args, **kwargs):
                         # 日志格式
                         )
     logging.info(*args, **kwargs)
-    return builtins.print(*args, **kwargs)
+    if not global_param.g_stop_torch_print:
+        return builtins.print(*args, **kwargs)

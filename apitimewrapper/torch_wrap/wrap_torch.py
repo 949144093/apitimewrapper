@@ -93,19 +93,23 @@ class TorchOPTemplate(torch.nn.Module):
 
     def forward(self, *args, **kwargs):
         if self.changed_status:
-            start_time = time.perf_counter()
-            if self.input_param_need_adapt():
-                out = getattr(torch._C._VariableFunctionsClass, str(self.op_name_))(args, **kwargs)
-            else:
-                if self.op_name_ == 'einsum':
-                    args = self.einsum_adapt(*args)
-                out = getattr(torch._C._VariableFunctionsClass, str(self.op_name_))(*args, **kwargs)
-            if not self.parall_execute:
-                torch.cuda.synchronize()
-            end_time = time.perf_counter()
-            print(f"torch.{self.op_name_} cost_time:{end_time - start_time}")
-            self.changed_status = False
-            global_param.g_stop_hook = False
+            try:
+                start_time = time.perf_counter()
+                if self.input_param_need_adapt():
+                    out = getattr(torch._C._VariableFunctionsClass, str(self.op_name_))(args, **kwargs)
+                else:
+                    if self.op_name_ == 'einsum':
+                        args = self.einsum_adapt(*args)
+                    out = getattr(torch._C._VariableFunctionsClass, str(self.op_name_))(*args, **kwargs)
+                if not self.parall_execute:
+                    torch.cuda.synchronize()
+                end_time = time.perf_counter()
+                print(f"torch.{self.op_name_} cost_time:{end_time - start_time}")
+            except Exception as e:
+                raise e
+            finally:
+                self.changed_status = False
+                global_param.g_stop_hook = False
         else:
             if self.input_param_need_adapt():
                 out = getattr(torch._C._VariableFunctionsClass, str(self.op_name_))(args, **kwargs)
