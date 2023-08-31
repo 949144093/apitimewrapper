@@ -176,10 +176,10 @@ end_analysis()
 #### 0.0.5版本更新日志
 1. 新增全局变量控制运行时是否打屏（默认写入日志）
 ```python
-from apitimewrapper.ms_wrap import global_param
-from apitimewrapper.torch_wrap import global_param
-global_param.g_stop_ms_print = True
-global_param.g_stop_torch_print = True
+from apitimewrapper.ms_wrap import global_param as ms_gp
+from apitimewrapper.torch_wrap import global_param as torch_gp
+ms_gp.g_stop_ms_print = True
+torch_gp.g_stop_torch_print = True
 ```
 2. 新增异常处理逻辑，修复在测试脚本中使用异常处理时导致后续api性能数据消失的bug
 3. 增添torch遗漏接口torch.meshgrid, torch.Tensor.split
