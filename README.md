@@ -184,6 +184,9 @@ torch_gp.g_stop_torch_print = True
 2. 新增异常处理逻辑，修复在测试脚本中使用异常处理时导致后续api性能数据消失的bug
 3. 增添torch遗漏接口torch.meshgrid, torch.Tensor.split
 
+#### 0.0.6版本更新日志
+1. 修复__add__ __mul__等魔法方法无法统计性能的问题，针对原生使用的+ - * /等提供支持
+
 #### 参与贡献
 
 1.  Fork 本仓库
