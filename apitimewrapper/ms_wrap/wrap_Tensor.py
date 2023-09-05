@@ -74,7 +74,7 @@ def wrap_tensor_ops_and_bind(hook_inside=False, parall_execute=False):
 def initialize_hook_tensor(hook_inside=False, parall_execute=False):
     wrap_tensor_ops_and_bind(hook_inside, parall_execute)
     for attr_name in dir(HOOKTensor):
-        if attr_name.startswith("wrap_") and not attr_name.startswith("wrap__") and not isinstance(
+        if attr_name.startswith("wrap_") and not isinstance(
                 getattr(ms.Tensor, attr_name[5:]), property):
             setattr(ms.Tensor, attr_name[5:], getattr(HOOKTensor, attr_name))
             setattr(ms.common._stub_tensor.StubTensor, attr_name[5:], getattr(HOOKTensor, attr_name))
