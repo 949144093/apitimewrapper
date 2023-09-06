@@ -23,7 +23,7 @@ from setuptools import find_packages, setup
 from setuptools.command.build_py import build_py
 from setuptools.command.egg_info import egg_info
 
-version = '0.0.6'
+version = '0.0.7'
 
 cur_dir = os.path.dirname(os.path.realpath(__file__))
 pkg_dir = os.path.join(cur_dir, 'build')

@@ -4,6 +4,7 @@ import mindspore as ms
 from mindspore import ops, nn
 from mindspore.common.api import _pynative_executor
 import mindspore.ops.function as F
+from mindspore.ops import functional as F1
 import time
 from . import global_param
 from .my_print import print
@@ -74,6 +75,8 @@ def initialize_hook_ops(hook_inside=False, parall_execute=False):
     for attr_name in dir(HOOKFunctionalOP):
         if attr_name.startswith("wrap_"):
             setattr(ops, attr_name[5:], getattr(HOOKFunctionalOP, attr_name))
+            setattr(F, attr_name[5:], getattr(HOOKFunctionalOP, attr_name))
+            setattr(F1, attr_name[5:], getattr(HOOKFunctionalOP, attr_name))
 
 
 if __name__ == '__main__':
