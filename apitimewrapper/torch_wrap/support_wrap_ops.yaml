@@ -137,6 +137,7 @@ functional:
   - unfold
   - fold
   - multi_head_attention_forward
+  - zeros_like
 
 tensor:
   - __add__
@@ -404,6 +405,7 @@ tensor:
   - logical_xor_
   - logit_
   - logsumexp
+  - long
   - lstsq
   - lt
   - lt_
@@ -1004,6 +1006,7 @@ torch:
   - vstack
   - where
   - xlogy_
+  - zeros_like
 
 _VF:
   - lstm
