@@ -43,11 +43,11 @@
 ```
 bash setup.sh
 cd dist
-pip install apitimewrapper-0.0.5-py3-none-any.whl
+pip install apitimewrapper==0.0.6
 ```
 
 #### 使用说明
-1. pip install apitimewrapper-0.0.5-py3-none-any.whl
+1. pip install apitimewrapper==0.0.6
 2. 修改我们的网络执行入口文件，若要执行训练，则修改train.py, 若要执行推理，则修改eval.py。  
 以如下dino网络为例：  
 首先在文件注释step1的位置增添导包，分别导出start_hook_net和print方法，其中start_hook_net方法用于对我们整网的所有api(nn, ops, tensor)进行wrap，在其执行前后进行自动打点计时，print则重载了原生的内建print方法，增添了打屏并写入日志的功能。  
